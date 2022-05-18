@@ -5,8 +5,8 @@ const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
   const [restaurant, setRestaurant] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0);
-  const [pageSize] = useState(20);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize] = useState(13);
 
   console.log("restaurant context", restaurant);
 
@@ -20,7 +20,7 @@ const AppProvider = ({ children }) => {
 
   const totalPosts = restaurant.length; //? 40
 
-  const indexOfLastPost = pageNumber + 1 * pageSize;
+  const indexOfLastPost = pageNumber * pageSize;
   const indexOfFirstPost = indexOfLastPost - pageSize;
   const currentPage = restaurant.slice(indexOfFirstPost, indexOfLastPost);
   console.log("currentPage context", currentPage);
@@ -28,14 +28,19 @@ const AppProvider = ({ children }) => {
   const nextPage = () => {
     setPageNumber((oldPage) => {
       let nextPage = oldPage + 1;
-      if (nextPage >= totalPosts) return nextPage;
+      let maxPage = Math.ceil(totalPosts / pageSize);
+
+      if (nextPage > maxPage) {
+        nextPage = maxPage;
+      }
+      return nextPage;
     });
   };
 
   const prevPage = () => {
     setPageNumber((oldPage) => {
       let prevPage = oldPage - 1;
-      if (prevPage < 0) {
+      if (prevPage <= 0) {
         prevPage = 1;
       }
       return prevPage;

@@ -30,7 +30,7 @@ function Footer() {
           })}
 
           <span className="footer-icon">
-            <i key={nextPage} onClink={nextPage}>
+            <i key={nextPage} onClick={nextPage}>
               <FiChevronRight />
             </i>
           </span>
