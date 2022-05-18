@@ -1,12 +1,15 @@
 import React from "react";
 import "./placeList.css";
 import { GoCalendar } from "react-icons/go";
-import data from "../../example_data.json";
+import { useGlobalContext } from "../../context/Context";
 
 function PlaceList() {
+  const { currentPage } = useGlobalContext();
+  console.log("PlaceList", currentPage);
+
   return (
     <div className="placelist">
-      {data.map((item) => {
+      {currentPage.map((item) => {
         return (
           <div className="placelist-container" key={item.id}>
             <div className="placelist-blog">
