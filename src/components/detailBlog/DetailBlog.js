@@ -1,30 +1,32 @@
 import React, { useEffect } from "react";
 import "./detailBlog.css";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../context/Context";
 
 function DetailBlog() {
-  let navigate = useNavigate();
   const { id } = useParams();
   console.log("useparam detailblog", id);
 
   const { currentPage } = useGlobalContext();
   console.log("detailBlog", currentPage);
 
-  const routeChange = () => {
-    let path = `/detail/${id}`;
-    navigate(path);
-  };
+  const filterPage = currentPage.filter((item) => {
+    return item.id.toString() === id;
+  });
+  console.log("filterPage detailblog", filterPage);
 
-  useEffect(() => {
-    routeChange();
-  }, [id]);
+  // const filterPage = () => {
+  //   return currentPage.filter((item) => {
+  //     return item.id.toString() === id;
+  //   });
+  // };
+
+  useEffect(() => {}, [id]);
 
   return (
     <div className="detailBlog">
       <div className="detailBlog-background">
-        {currentPage.map((item) => {
+        {filterPage.map((item) => {
           return (
             <div className="detailBlog-container" key={item.id}>
               <img src={item.profile_image_url} alt="" />
@@ -66,20 +68,15 @@ function DetailBlog() {
           <div className="detailBlog-images">
             <h3>Images</h3>
 
-            <div className="detailBlog-imglist">
-              <img
-                src="https://res.cloudinary.com/dk7xxtqnj/image/upload/v1647082456/qov6sdzuqcrd4iyxpynx.jpg"
-                alt=""
-              />
-              <img
-                src="https://res.cloudinary.com/dk7xxtqnj/image/upload/v1647082456/qov6sdzuqcrd4iyxpynx.jpg"
-                alt=""
-              />
-              <img
-                src="https://res.cloudinary.com/dk7xxtqnj/image/upload/v1647082456/qov6sdzuqcrd4iyxpynx.jpg"
-                alt=""
-              />
-            </div>
+            {filterPage.map((item) => {
+              return (
+                <div className="detailBlog-imglist">
+                  {item.images.map((img) => {
+                    return <img src={img} alt="" />;
+                  })}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
