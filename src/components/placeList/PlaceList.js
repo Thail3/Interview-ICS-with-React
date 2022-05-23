@@ -1,6 +1,7 @@
 import React from "react";
 import "./placeList.css";
 import { GoCalendar } from "react-icons/go";
+import { Link } from "react-router-dom";
 import { useGlobalContext } from "../../context/Context";
 
 function PlaceList() {
@@ -12,31 +13,33 @@ function PlaceList() {
       {currentPage.map((item) => {
         return (
           <div className="placelist-container" key={item.id}>
-            <div className="placelist-blog">
-              <div className="placelist-header">
-                <img src={item.profile_image_url} alt="" />
+            <Link to={`/detail/${item.id}`} className="placelist-link">
+              <div className="placelist-blog">
+                <div className="placelist-header">
+                  <img src={item.profile_image_url} alt="" />
 
-                <div className="placelist-title">
-                  <h3>{item.name}</h3>
-                  <div className="placelist-rate">
-                    <p>
-                      <GoCalendar />
+                  <div className="placelist-title">
+                    <h3>{item.name}</h3>
+                    <div className="placelist-rate">
+                      <p>
+                        <GoCalendar />
 
-                      {`${item.operation_time[0].time_open} AM - ${item.operation_time[0].time_close}`}
-                    </p>
-                    <span>{item.rating}</span>
+                        {`${item.operation_time[0].time_open} AM - ${item.operation_time[0].time_close}`}
+                      </p>
+                      <span>{item.rating}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="placelist-img">
+                  <div className="placelist-img-list">
+                    {item.images.map((img) => {
+                      return <img src={img} alt="" />;
+                    })}
                   </div>
                 </div>
               </div>
-
-              <div className="placelist-img">
-                <div className="placelist-img-list">
-                  {item.images.map((img) => {
-                    return <img src={img} alt="" />;
-                  })}
-                </div>
-              </div>
-            </div>
+            </Link>
           </div>
         );
       })}

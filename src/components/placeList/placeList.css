@@ -6,10 +6,14 @@
 }
 
 .placelist-container {
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   width: 32%;
+}
+
+.placelist-link {
+  text-decoration: none;
 }
 
 .placelist-blog {
@@ -41,6 +45,7 @@
 
 .placelist-title {
   width: 80%;
+  color: black;
 }
 
 .placelist-rate {
