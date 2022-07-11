@@ -10,7 +10,7 @@ function Header() {
   const { id } = useParams();
   console.log("useparams Header", id);
 
-  const { currentPage } = useGlobalContext();
+  const { currentPage, searchItems } = useGlobalContext();
   console.log("currentpage Header", currentPage);
 
   const filterHeader = currentPage.filter((item) => {
@@ -43,7 +43,11 @@ function Header() {
             <div className="header-line"></div>
 
             <div className="header-input">
-              <input type="text" placeholder="Search name " />
+              <input
+                type="text"
+                placeholder="Search name "
+                onChange={(e) => searchItems(e.target.value)}
+              />
 
               <div className="header-line-icon">
                 <BsSearch />

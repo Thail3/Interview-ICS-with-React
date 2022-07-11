@@ -7,8 +7,11 @@ const AppProvider = ({ children }) => {
   const [restaurant, setRestaurant] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize] = useState(13);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
 
   console.log("restaurant context", restaurant);
+  console.log("searchInput context", searchInput);
 
   // const getItemList = (data, pageNumber, pageSize) => {
   //   const firstIndex = (pageNumber - 1) * pageSize;
@@ -51,6 +54,21 @@ const AppProvider = ({ children }) => {
     setPageNumber(numberOfPage);
   };
 
+  const searchItems = (searchValue) => {
+    setSearchInput(searchValue);
+    if (searchInput !== "") {
+      const filteredData = restaurant.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(restaurant);
+    }
+  };
+
   useEffect(() => {
     setRestaurant([...data]);
   }, [pageNumber]);
@@ -66,6 +84,9 @@ const AppProvider = ({ children }) => {
         nextPage,
         prevPage,
         handlePage,
+        searchInput,
+        filteredResults,
+        searchItems,
       }}
     >
       {children}
